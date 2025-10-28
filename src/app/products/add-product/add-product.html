@@ -1,0 +1,69 @@
+<div class="add-product-container">
+  <h2 class="title">Add Product</h2>
+
+  <form class="product-form" autocomplete="off" [formGroup]="productForm" (ngSubmit)="addProduct()">
+    <div class="row">
+      <label for="name">Product Name</label>
+      <input id="name" name="name" type="text" placeholder="Enter product name" formControlName="name" [class.error]="productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched)" />
+      @if (productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched)) {
+      <div class="error-message">
+        @if (productForm.get('name')?.errors?.['required']) {
+        <span>Product name is required</span>
+        }
+        @if (productForm.get('name')?.errors?.['minlength']) {
+        <span>Product name must be at least 3 characters</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="row two-col">
+      <div class="row">
+        <label for="price">Price</label>
+        <input id="price" name="price" type="number" min="0" step="0.01" placeholder="0.00" formControlName="price" [class.error]="productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched)" />
+        @if (productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched)) {
+        <div class="error-message">
+          @if (productForm.get('price')?.errors?.['required']) {
+          <span>Price is required</span>
+          }
+          @if (productForm.get('price')?.errors?.['min']) {
+          <span>Price must be greater than 0</span>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="image">Image URL</label>
+      <input id="image" name="image" type="url" placeholder="https://..." formControlName="imageUrl" [class.error]="productForm.get('imageUrl')?.invalid && (productForm.get('imageUrl')?.dirty || productForm.get('imageUrl')?.touched)" />
+      @if (productForm.get('imageUrl')?.invalid && (productForm.get('imageUrl')?.dirty || productForm.get('imageUrl')?.touched)) {
+      <div class="error-message">
+        @if (productForm.get('imageUrl')?.errors?.['pattern']) {
+        <span>Please enter a valid URL</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="row">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="5" placeholder="Short description of the product" formControlName="description" [class.error]="productForm.get('description')?.invalid && (productForm.get('description')?.dirty || productForm.get('description')?.touched)"></textarea>
+      @if (productForm.get('description')?.invalid && (productForm.get('description')?.dirty || productForm.get('description')?.touched)) {
+      <div class="error-message">
+        @if (productForm.get('description')?.errors?.['required']) {
+        <span>Description is required</span>
+        }
+        @if (productForm.get('description')?.errors?.['minlength']) {
+        <span>Description must be at least 20 characters</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn save" [disabled]="productForm.invalid">Save</button>
+      <button type="button" class="btn cancel">Cancel</button>
+    </div>
+  </form>
+</div>
